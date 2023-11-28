@@ -3,6 +3,8 @@ import { Navbar } from './components/NavBar/navBar';
 
 function App() {
   return (
+
+
     <Navbar/>
   );
 }
