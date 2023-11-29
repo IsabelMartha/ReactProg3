@@ -5,23 +5,20 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import "./navBar.css";
 
-import {Navbar, Nav}  from "react-bootstrap";
+import { Navbar }  from "react-bootstrap";
 
-
-
-export const Navbar = () => {
+export const NavBar = () => {
     return (
         <div className="menu">
             <div className="menu-content">
-                <Navbar 
-                bg="light" 
-                expand="lg" 
-                className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <Nav.brand className="ml auto">
-                    <img src="/img/favicon.png" alt="" />
-                </Nav.brand>
+                <Navbar bg="light" 
+                        expand="lg" 
+                        className="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <Navbar.Brand className="ml auto">
+                        <img src="/img/favicon.png" alt="" />
+                    </Navbar.Brand>
                 </Navbar>
             </div>
         </div>
-    )
+    );
 }

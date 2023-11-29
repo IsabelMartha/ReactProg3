@@ -1,11 +1,11 @@
+import React from 'react';
+
 import './App.css'; //Importa la hoja de estilos de App
-import { Navbar } from './components/NavBar/navBar';
+import { NavBar } from './components/NavBar/navBar';
 
 function App() {
   return (
-
-
-    <Navbar/>
+    <NavBar/>
   );
 }
 
