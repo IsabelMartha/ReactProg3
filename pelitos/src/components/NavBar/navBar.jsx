@@ -1,24 +1,33 @@
-import React from "react";
+import React from 'react';
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import "./navBar.css";
+import './navBar.css';
 
-import { Navbar }  from "react-bootstrap";
+import { 
+    Navbar, 
+    Nav, 
+    Container, 
+    NavDropdown } from 'react-bootstrap';
 
-export const NavBar = () => {
+
+ const NavBar = () => {
     return (
-        <div className="menu">
-            <div className="menu-content">
-                <Navbar bg="light" 
-                        expand="lg" 
-                        className="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <Navbar.Brand className="ml auto">
-                        <img src="/img/favicon.png" alt="" />
-                    </Navbar.Brand>
-                </Navbar>
-            </div>
-        </div>
+        <Navbar expand="lg" className="bg-body-tertiary">
+            <Container>
+                <Navbar.Brand href="/">Pelitos </Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link href="/">Inicio</Nav.Link>
+                        <NavDropdown title="Productos" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/productos">Productos</NavDropdown.Item>
+                        </NavDropdown>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     );
 }
+export default NavBar;
