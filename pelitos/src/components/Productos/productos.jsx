@@ -48,6 +48,8 @@ export const Productos = () => {
                                 <th>Url</th>
                                 <th>IdTipoProducto</th>
                             </tr>
+                            <Link to="" className="btn btn-warning border">Editar</Link>
+                            <Link to="" className="btn btn-danger border">Eliminar</Link>
                         </thead>
                         <tbody>
                         {
@@ -58,8 +60,6 @@ export const Productos = () => {
                                     <td>{producto.url}</td>
                                     <td>{producto.description}</td>
                                     <td>
-                                    <Link to="" className="btn btn-warning border">Editar</Link>
-                                    <Link to="" className="btn btn-danger border">Eliminar</Link>
                                     </td>
                                 </tr>);
                             })
