@@ -6,7 +6,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "./home.css";
 
 export const Home = () => {
+    return (
     <>
     <p> Bienvenidos</p>
     </>
+    );
 }

@@ -21,7 +21,8 @@ import {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link href="/">Inicio</Nav.Link>
-                        <NavDropdown title="Productos" id="basic-nav-dropdown">
+                        <Nav.Link href="/nosotros">Nosotros</Nav.Link>
+                        <NavDropdown title="Tienda" id="basic-nav-dropdown">
                             <NavDropdown.Item href="/productos">Productos</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
