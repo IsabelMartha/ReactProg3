@@ -41,15 +41,12 @@ export const Productos = () => {
                     <Table striped bordered hover>
                         <thead>
                             <tr>
-                            <th>ID</th>
-                                <th>Títle</th>
-                                <th>Description</th>
-                                <th>Price</th>
-                                <th>Url</th>
-                                <th>IdTipoProducto</th>
+                                <th>ID</th>
+                                <th>Título</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Acciones</th>
                             </tr>
-                            <Link to="" className="btn btn-warning border">Editar</Link>
-                            <Link to="" className="btn btn-danger border">Eliminar</Link>
                         </thead>
                         <tbody>
                         {
@@ -57,17 +54,18 @@ export const Productos = () => {
                                 return (<tr>
                                     <td>{producto.id}</td>
                                     <td>{producto.title}</td>
-                                    <td>{producto.url}</td>
                                     <td>{producto.description}</td>
+                                    <td>{producto.price}</td>
                                     <td>
+                                        <Link to="" className="btn btn-warning border">Editar</Link>
+                                        <Link to="" className="btn btn-danger border">Eliminar</Link>
                                     </td>
                                 </tr>);
                             })
                         }
                         </tbody>
                     </Table>
-            }
-            
+            }           
         </>
     );
 }
