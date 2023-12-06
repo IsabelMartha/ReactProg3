@@ -1,43 +1,45 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const BASE_URL = 'http://localhost:5154';
+
 const CrearProducto = () => {
     const [nuevoProducto, setNuevoProducto] = useState({
         nombre: '',
         descripcion: '',
         precio: 0,
-        imagenes: null, // El campo de archivos debe ser inicializado como null
+        imagenes: '',
     });
 
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        const { name, value, files } = e.target;
+        const { name, value } = e.target;
         setNuevoProducto((prevProducto) => ({
             ...prevProducto,
-            [name]: files ? files[0] : value, // Si es un campo de archivo, actualiza con el archivo
+            [name]: value,
         }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const formData = new FormData();
-            formData.append('title', nuevoProducto.nombre);
-            formData.append('description', nuevoProducto.descripcion);
-            formData.append('price', nuevoProducto.precio);
-            formData.append('image', nuevoProducto.imagenes);
-
-            const response = await fetch('https://localhost:7074/Producto/Type', {
+            const response = await fetch(`${BASE_URL}/producto`, {
                 method: 'POST',
-                body: formData,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(nuevoProducto),
             });
 
             if (!response.ok) {
                 throw new Error(`Error al crear el producto. Status: ${response.status}`);
             }
 
-            navigate('/productos'); // Redireccionar después de crear el producto
+            const productoCreado = await response.json();
+
+            // Opcional: Puedes redirigir a la página de detalles del nuevo producto
+            navigate(`/productos/${productoCreado.id}`);
         } catch (error) {
             console.error('Error al crear el producto:', error);
         }
@@ -48,16 +50,16 @@ const CrearProducto = () => {
             <h2>Crear Producto</h2>
             <form onSubmit={handleSubmit}>
                 <label>Nombre:
-                    <input type="text" name="nombre" onChange={handleChange} />
+                    <input type="text" name="nombre" value={nuevoProducto.nombre} onChange={handleChange} />
                 </label>
                 <label>Descripción:
-                    <textarea name="descripcion" onChange={handleChange} />
+                    <textarea name="descripcion" value={nuevoProducto.descripcion} onChange={handleChange} />
                 </label>
                 <label>Precio:
-                    <input type="number" name="precio" onChange={handleChange} />
+                    <input type="number" name="precio" value={nuevoProducto.precio} onChange={handleChange} />
                 </label>
                 <label>Imágenes:
-                    <input type="file" name="imagenes" onChange={handleChange} />
+                    <textarea name="imagenes" value={nuevoProducto.imagenes} onChange={handleChange}></textarea>
                 </label>
                 <button type="submit">Crear Producto</button>
             </form>
