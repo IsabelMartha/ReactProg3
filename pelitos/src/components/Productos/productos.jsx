@@ -32,17 +32,20 @@ const CrearProducto = () => {
                 throw new Error(`Error al obtener productos. Status: ${response.status}`);
             }
             const data = await response.json();
+            console.log("Productos obtenidos:", data); // Agrega un log para verificar los productos obtenidos
             setProductos(data);
             setCurrentPage(page);
         } catch (error) {
             console.error('Error al obtener los productos:', error);
         }
     };
+    
     const handleSearch = async (searchTerm) => {
         try {
             const response = await fetch(`https://localhost:7074/Productos?search=${searchTerm}`);
             if (!response.ok) {
                 throw new Error(`Error al obtener productos. Status: ${response.status}`);
+                console.log('No existe');
             }
             const data = await response.json();
             setProductos(data); // Actualiza el estado de los productos con los resultados de la búsqueda
