@@ -27,7 +27,7 @@ const CrearProducto = () => {
     };
     const handlePagination = async (page) => {
         try {
-            const response = await fetch(`https://localhost:7074/Productos?page=${page}&size=10`);
+            const response = await fetch(`https://localhost:7074/Producto?page=${page}&size=10`);
             if (!response.ok) {
                 throw new Error(`Error al obtener productos. Status: ${response.status}`);
             }
@@ -42,7 +42,7 @@ const CrearProducto = () => {
     
     const handleSearch = async (searchTerm) => {
         try {
-            const response = await fetch(`https://localhost:7074/Productos?search=${searchTerm}`);
+            const response = await fetch(`https://localhost:7074/Producto?search=${searchTerm}`);
             if (!response.ok) {
                 throw new Error(`Error al obtener productos. Status: ${response.status}`);
                 console.log('No existe');
