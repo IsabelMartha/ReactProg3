@@ -6,3 +6,28 @@
 .card {
     border-style:solid; border-color:black; border-width:1px;
 }
+
+/* Estilos CSS */
+.primary {
+    background-color: #5834db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .primary:hover {
+    background-color: rgba(84, 41, 185, 0.815);
+  }
+  .danger {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
