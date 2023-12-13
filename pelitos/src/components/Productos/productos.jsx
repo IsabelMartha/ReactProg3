@@ -1,138 +1,77 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import Table from 'react-bootstrap/Table';
+import { Link } from 'react-router-dom';
+import { ImSpinner3 } from 'react-icons/im';
+import AgregarProducto from '../AgregarProducto/agregarproducto';
+
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 import './productos.css';
-import Paginador from '../Paginador/paginador';
-import Buscador from '../Buscador/buscador';
-import ProductosTabla from '../ProductosTabla/productostabla';
-const CrearProducto = () => {
-    const [showForm, setShowForm] = useState(false);
-    const [nuevoProducto, setNuevoProducto] = useState({
-        nombre: '',
-        descripcion: '',
-        precio: 0,
-        imagenes: null,
-    });
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [productos, setProductos] = useState([]); // Definir el estado de los productos
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-    const navigate = useNavigate();
-
-    const handleChange = (e) => {
-        const { name, value, files } = e.target;
-        setNuevoProducto((prevProducto) => ({
-            ...prevProducto,
-            [name]: files ? files[0] : value,
-        }));
-    };
-    const handlePagination = async (page) => {
+export const Productos = () => {
+    const [showAgregar, setShowAgregar] = useState(false);// Definición de la variable showAgregar y setShowAgregar
+    const fetchData = async () => {
         try {
-            const response = await fetch(`https://localhost:7074/Producto/Type/4?page=${page}&size=10`);
-            if (!response.ok) {
-                throw new Error(`Error al obtener productos. Status: ${response.status}`);
-            }
-            const data = await response.json();
-            console.log("Productos obtenidos:", data); // Agrega un log para verificar los productos obtenidos
-            setProductos(data);
-            setCurrentPage(page);
-        } catch (error) {
-            console.error('Error al obtener los productos:', error);
-        }
-    };
+            let response = await fetch("https://localhost:7074/Producto/Type/1");
+            let json = await response.json();
+            
+            setProductos(json);
+
+            console.log(json);
+        } catch(e) {
     
-    const handleSearch = async (searchTerm) => {
-        try {
-            const response = await fetch(`https://localhost:7074/Producto/Type/4?search=${searchTerm}`);
-            if (!response.ok) {
-                throw new Error(`Error al obtener productos. Status: ${response.status}`);
-                console.log('No existe');
-            }
-            const data = await response.json();
-            setProductos(data); // Actualiza el estado de los productos con los resultados de la búsqueda
-        } catch (error) {
-            console.error('Error al buscar productos:', error);
+        } finally {
+            setLoading(false);
         }
-    };
+    }
     
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const formData = new FormData();
-            formData.append('title', nuevoProducto.nombre);
-            formData.append('description', nuevoProducto.descripcion);
-            formData.append('price', nuevoProducto.precio);
-            formData.append('file', nuevoProducto.imagenes);
-            formData.append('idTipoProducto', 4);
-
-            console.log(nuevoProducto);
-
-            const response = await fetch('https://localhost:7074/Producto/Type/4', {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (!response.ok) {
-                throw new Error(`Error al crear el producto. Status: ${response.status}`);
-            }
-
-            // Limpiar los campos después de un POST exitoso
-            setNuevoProducto({
-                nombre: '',
-                descripcion: '',
-                precio: 0,
-                imagenes: null,
-            });
-
-            navigate('/productos');
-            handlePagination(currentPage);
-        } catch (error) {
-            console.error('Error al crear el producto:', error);
-        }
-          
-    };
-
-    const toggleForm = () => {
-        setShowForm(!showForm);
-    };
-
+    const [loading, setLoading] = useState(true);
+    const [productos, setProductos] = useState([]);
+    useEffect(() => {
+        setLoading(true);
+        fetchData();  
+    }, []);
+    
     return (
-        <div>
-            <button onClick={toggleForm} className='primary'>Crear Producto</button>
-            {showForm && (
-                <div>
-                    <form onSubmit={handleSubmit}>
-                        <label>Nombre:
-                            <input type="text" name="nombre" onChange={handleChange} />
-                        </label>
-                        <label>Descripción:
-                            <textarea name="descripcion" onChange={handleChange} />
-                        </label>
-                        <label>Precio:
-                            <input type="number" name="precio" onChange={handleChange} />
-                        </label>
-                        <label>Imágenes:
-                            <input type="file" name="imagenes" onChange={handleChange} />
-                        </label>
-                        <button type="submit" className='primary'>Crear Producto</button>
-                        <button onClick={toggleForm} className='danger'>Cancelar</button>
-                    </form>
-                    
-                </div>
-                
-            )}
-             <ProductosTabla productos={productos} />
-            <Buscador onSearch={handleSearch} />
-            <Paginador
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePagination}
-/>
-
-        </div>
         
-        
+        <>
+        <button className="btn btn-primary" onClick={() => setShowAgregar(true)}>Agregar Producto</button>
+        {showAgregar && <AgregarProducto setShowAgregar={setShowAgregar} />}
+            {
+                loading ?
+                    <div className='spinner'><ImSpinner3/></div> :
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Título</th>
+                                <th>Descripción</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            productos.map((producto) => {
+                                return (<tr>
+                                    <td>{producto.description}</td>
+                                    <td>{producto.id}</td>
+                                    <td>{producto.title}</td>
+                                    <td>{producto.price}</td>
+                                    <td>
+                                        <Link to="" className="btn btn-primary">Editar</Link>
+                                        <Link to="" className="btn btn-secondary">Eliminar</Link>
+                                    </td>
+                                </tr>);
+                            })
+                        }
+                        </tbody>
+                    </Table>
+}
+            
+        </>
     );
-};
-
-export default CrearProducto;
+}

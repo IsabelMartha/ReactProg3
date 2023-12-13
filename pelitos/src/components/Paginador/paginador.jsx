@@ -39,6 +39,7 @@ const Paginador = ({ currentPage, totalPages, onPageChange }) => {
         Última
       </button>
     </div>
+    
   );
 };
 
